@@ -7,8 +7,8 @@ public class Main {
         String teamName = communicator.enterNameOfTeam("Enter name of team: ");
         List<String> listOfAllMatches = info.getListOfMatches();
         List<String> listOfNecessaryMatches = info.getNecessaryTeam(listOfAllMatches, teamName);
-        String result = info.result(listOfNecessaryMatches, teamName);
-        communicator.resultOut(result);
+        List<String> listOfResults = info.result(listOfNecessaryMatches, teamName);
+        communicator.resultOut(listOfResults);
         communicator.close();
     }
 }

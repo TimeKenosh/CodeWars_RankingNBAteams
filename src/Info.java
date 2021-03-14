@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +14,7 @@ public class Info {
     int points = 0;
 
     public List<String> getListOfMatches() {
-        List<String> listOfMatches1 = Arrays.asList(resultSheet3.split(","));
+        String[] listOfMatches1 = resultSheet3.split(",");
         List<String> listOfMatches2 = new ArrayList<>();
         for (String s : listOfMatches1) {
             listOfMatches2.add(s + " ");
@@ -32,7 +32,8 @@ public class Info {
         return necessaryTeam;
     }
 
-    public String result(List<String> list, String name) {
+    public List<String> result(List<String> list, String name) {
+        List<String> resultList = new ArrayList<>();
         List<Integer> listScoreBothTeams = new ArrayList<>();
         int myTeamScore = 0;
         Pattern myTeamPattern = Pattern.compile(name + " \\d+ ");
@@ -84,11 +85,14 @@ public class Info {
                 }
             }
         }
-        String result = name + ":W=" + countWins + ";D=" + countDraws + ";L=" + countLoses + ";Scored=" + score + ";Conceded=" + conceded + ";Points=" + points;
-        if (countWins == 0 && countLoses == 0 && countDraws == 0) {
-            result = name + ": This team didn`t play";
-        }
-        return result;
+        String sCountWins = String.valueOf(countWins);
+        String sCountDraws = String.valueOf(countDraws);
+        String sCountLoses = String.valueOf(countLoses);
+        String sScore = String.valueOf(score);
+        String sConceded = String.valueOf(conceded);
+        String sPoints = String.valueOf(points);
+        Collections.addAll(resultList, name, sCountWins, sCountDraws, sCountLoses, sScore, sConceded, sPoints);
+        return resultList;
     }
 
     String resultSheet1 = "Los Angeles Clippers 104 Dallas Mavericks 88,New York Knicks 101 Atlanta Hawks 112,Indiana Pacers 103 Memphis Grizzlies 112,"
@@ -107,11 +111,5 @@ public class Info {
             + "Los Angeles Clippers 130 Golden State Warriors 95,Utah Jazz 102 Oklahoma City Thunder 113,San Antonio Spurs 84 Phoenix Suns 104,"
             + "Chicago Bulls 103 Indiana Pacers 94,Milwaukee Bucks 106 Minnesota Timberwolves 88,Los Angeles Lakers 104 Portland Trail Blazers 102,"
             + "Houston Rockets 120 New Orleans Pelicans 100,Boston Celtics 111 Brooklyn Nets 105,Charlotte Hornets 94 Chicago Bulls 86,Cleveland Cavaliers 103 Dallas Mavericks 97";
-    String teams = "Los Angeles Clippers,Dallas Mavericks,New York Knicks,NYK,Atlanta Hawks,Indiana Pacers,Memphis Grizzlies,"
-            + "Los Angeles Lakers,Minnesota Timberwolves,Phoenix Suns,Portland Trail Blazers,New Orleans Pelicans,"
-            + "Sacramento Kings,Los Angeles Clippers,Houston Rockets,Denver Nuggets,Cleveland Cavaliers,Milwaukee Bucks,"
-            + "Oklahoma City Thunder,San Antonio Spurs,Boston Celtics,Philadelphia 76ers,Brooklyn Nets,Chicago Bulls,"
-            + "Detroit Pistons,Utah Jazz,Miami Heat,Charlotte Hornets,Toronto Raptors,Orlando Magic,Washington Wizards,"
-            + "Golden State Warriors,Dallas Maver";
     String resultSheet3 = resultSheet1 + resultSheet2;
 }
