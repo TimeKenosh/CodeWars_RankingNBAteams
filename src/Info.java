@@ -5,14 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Info {
-
-    int countWins = 0;
-    int countDraws = 0;
-    int countLoses = 0;
-    int score = 0;
-    int conceded = 0;
-    int points = 0;
-
     public List<String> getListOfMatches() {
         String[] listOfMatches1 = resultSheet3.split(",");
         List<String> listOfMatches2 = new ArrayList<>();
@@ -32,8 +24,8 @@ public class Info {
         return necessaryTeam;
     }
 
-    public List<String> result(List<String> list, String name) {
-        List<String> resultList = new ArrayList<>();
+    public List<Integer> result(List<String> list, String name) {
+        List<Integer> resultIntegerList = new ArrayList<>();
         List<Integer> listScoreBothTeams = new ArrayList<>();
         int myTeamScore = 0;
         Pattern myTeamPattern = Pattern.compile(name + " \\d+ ");
@@ -55,44 +47,14 @@ public class Info {
                     listScoreBothTeams.add(Integer.valueOf(check));
                 }
             }
+
             if (myTeamScore != listScoreBothTeams.get(listScoreBothTeams.size() - 2)) {
-                score += myTeamScore;
-                conceded += listScoreBothTeams.get(listScoreBothTeams.size() - 2);
-                if (myTeamScore > listScoreBothTeams.get(listScoreBothTeams.size() - 2)) {
-                    countWins++;
-                    points += 3;
-                }
-                if (myTeamScore < listScoreBothTeams.get(listScoreBothTeams.size() - 2)) {
-                    countLoses++;
-                }
-                if (myTeamScore == listScoreBothTeams.get(listScoreBothTeams.size() - 2)) {
-                    countDraws++;
-                    points++;
-                }
+                Collections.addAll(resultIntegerList, listScoreBothTeams.get(listScoreBothTeams.size() - 1), listScoreBothTeams.get(listScoreBothTeams.size() - 2));
             } else {
-                score += myTeamScore;
-                conceded += listScoreBothTeams.get(listScoreBothTeams.size() - 1);
-                if (myTeamScore > listScoreBothTeams.get(listScoreBothTeams.size() - 1)) {
-                    countWins++;
-                    points += 3;
-                }
-                if (myTeamScore < listScoreBothTeams.get(listScoreBothTeams.size() - 1)) {
-                    countLoses++;
-                }
-                if (myTeamScore == listScoreBothTeams.get(listScoreBothTeams.size() - 1)) {
-                    countDraws++;
-                    points++;
-                }
+                Collections.addAll(resultIntegerList, listScoreBothTeams.get(listScoreBothTeams.size() - 2), listScoreBothTeams.get(listScoreBothTeams.size() - 1));
             }
         }
-        String sCountWins = String.valueOf(countWins);
-        String sCountDraws = String.valueOf(countDraws);
-        String sCountLoses = String.valueOf(countLoses);
-        String sScore = String.valueOf(score);
-        String sConceded = String.valueOf(conceded);
-        String sPoints = String.valueOf(points);
-        Collections.addAll(resultList, name, sCountWins, sCountDraws, sCountLoses, sScore, sConceded, sPoints);
-        return resultList;
+        return resultIntegerList;
     }
 
     String resultSheet1 = "Los Angeles Clippers 104 Dallas Mavericks 88,New York Knicks 101 Atlanta Hawks 112,Indiana Pacers 103 Memphis Grizzlies 112,"

@@ -7,12 +7,12 @@ public class Communicator {
         System.out.print(text);
         return scanner.nextLine();
     }
-    public void resultOut(List<String> list){
+    public void resultOut(List<Integer> list, String name){
         String data;
-        if (list.get(1).equals("0") && list.get(2).equals("0") && list.get(3).equals("0")) {
-            data = list.get(0) + ": This team didn`t play";
+        if (list.get(0) == 0 && list.get(1) == 0 && list.get(2) == 0) {
+            data = name + ": This team didn`t play";
         } else {
-            data = list.get(0) + ":W=" + list.get(1) + ";D=" + list.get(2) + ";L=" + list.get(3) + ";Scored=" + list.get(4) + ";Conceded=" + list.get(5) + ";Points=" + list.get(6);
+            data = name + ":W=" + list.get(0) + ";D=" + list.get(1) + ";L=" + list.get(2) + ";Scored=" + list.get(3) + ";Conceded=" + list.get(4) + ";Points=" + list.get(5);
         }
         System.out.println(data);
     }
